@@ -1,0 +1,1055 @@
+Setting up the diffusion model...
+
+==============================
+=== Diffusion Model Details ===
+==============================
+
+-- Scheduler Configuration --
+DDIMScheduler {
+  "_class_name": "DDIMScheduler",
+  "_diffusers_version": "0.30.3",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": false,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "set_alpha_to_one": false,
+  "steps_offset": 1,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null
+}
+ 
+
+-- Stable Diffusion Pipeline --
+StableDiffusionPipeline {
+  "_class_name": "StableDiffusionPipeline",
+  "_diffusers_version": "0.30.3",
+  "_name_or_path": "CompVis/stable-diffusion-v1-4",
+  "feature_extractor": [
+    "transformers",
+    "CLIPImageProcessor"
+  ],
+  "image_encoder": [
+    null,
+    null
+  ],
+  "requires_safety_checker": true,
+  "safety_checker": [
+    "stable_diffusion",
+    "StableDiffusionSafetyChecker"
+  ],
+  "scheduler": [
+    "diffusers",
+    "DDIMScheduler"
+  ],
+  "text_encoder": [
+    "transformers",
+    "CLIPTextModel"
+  ],
+  "tokenizer": [
+    "transformers",
+    "CLIPTokenizer"
+  ],
+  "unet": [
+    "diffusers",
+    "UNet2DConditionModel"
+  ],
+  "vae": [
+    "diffusers",
+    "AutoencoderKL"
+  ]
+}
+ 
+
+-- Tokenizer Config (CLIP) --
+PreTrainedTokenizer(name_or_path='/home/cvig/.cache/huggingface/hub/models--CompVis--stable-diffusion-v1-4/snapshots/133a221b8aa7292a167afc5127cb63fb5005638b/tokenizer', vocab_size=49408, model_max_len=77, is_fast=False, padding_side='right', truncation_side='right', special_tokens={'bos_token': AddedToken("<|startoftext|>", rstrip=False, lstrip=False, single_word=False, normalized=True), 'eos_token': AddedToken("<|endoftext|>", rstrip=False, lstrip=False, single_word=False, normalized=True), 'unk_token': AddedToken("<|endoftext|>", rstrip=False, lstrip=False, single_word=False, normalized=True), 'pad_token': '<|endoftext|>'}) 
+
+-- VAE Configuration --
+AutoencoderKL(
+  (encoder): Encoder(
+    (conv_in): Conv2d(3, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (down_blocks): ModuleList(
+      (0): DownEncoderBlock2D(
+        (resnets): ModuleList(
+          (0-1): 2 x ResnetBlock2D(
+            (norm1): GroupNorm(32, 128, eps=1e-06, affine=True)
+            (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 128, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+          )
+        )
+        (downsamplers): ModuleList(
+          (0): Downsample2D(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2))
+          )
+        )
+      )
+      (1): DownEncoderBlock2D(
+        (resnets): ModuleList(
+          (0): ResnetBlock2D(
+            (norm1): GroupNorm(32, 128, eps=1e-06, affine=True)
+            (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 256, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+            (conv_shortcut): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1): ResnetBlock2D(
+            (norm1): GroupNorm(32, 256, eps=1e-06, affine=True)
+            (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 256, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+          )
+        )
+        (downsamplers): ModuleList(
+          (0): Downsample2D(
+            (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2))
+          )
+        )
+      )
+      (2): DownEncoderBlock2D(
+        (resnets): ModuleList(
+          (0): ResnetBlock2D(
+            (norm1): GroupNorm(32, 256, eps=1e-06, affine=True)
+            (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 512, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+            (conv_shortcut): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1): ResnetBlock2D(
+            (norm1): GroupNorm(32, 512, eps=1e-06, affine=True)
+            (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 512, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+          )
+        )
+        (downsamplers): ModuleList(
+          (0): Downsample2D(
+            (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2))
+          )
+        )
+      )
+      (3): DownEncoderBlock2D(
+        (resnets): ModuleList(
+          (0-1): 2 x ResnetBlock2D(
+            (norm1): GroupNorm(32, 512, eps=1e-06, affine=True)
+            (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 512, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+          )
+        )
+      )
+    )
+    (mid_block): UNetMidBlock2D(
+      (attentions): ModuleList(
+        (0): Attention(
+          (group_norm): GroupNorm(32, 512, eps=1e-06, affine=True)
+          (to_q): Linear(in_features=512, out_features=512, bias=True)
+          (to_k): Linear(in_features=512, out_features=512, bias=True)
+          (to_v): Linear(in_features=512, out_features=512, bias=True)
+          (to_out): ModuleList(
+            (0): Linear(in_features=512, out_features=512, bias=True)
+            (1): Dropout(p=0.0, inplace=False)
+          )
+        )
+      )
+      (resnets): ModuleList(
+        (0-1): 2 x ResnetBlock2D(
+          (norm1): GroupNorm(32, 512, eps=1e-06, affine=True)
+          (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (norm2): GroupNorm(32, 512, eps=1e-06, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+        )
+      )
+    )
+    (conv_norm_out): GroupNorm(32, 512, eps=1e-06, affine=True)
+    (conv_act): SiLU()
+    (conv_out): Conv2d(512, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  )
+  (decoder): Decoder(
+    (conv_in): Conv2d(4, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (up_blocks): ModuleList(
+      (0-1): 2 x UpDecoderBlock2D(
+        (resnets): ModuleList(
+          (0-2): 3 x ResnetBlock2D(
+            (norm1): GroupNorm(32, 512, eps=1e-06, affine=True)
+            (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 512, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+          )
+        )
+        (upsamplers): ModuleList(
+          (0): Upsample2D(
+            (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+      )
+      (2): UpDecoderBlock2D(
+        (resnets): ModuleList(
+          (0): ResnetBlock2D(
+            (norm1): GroupNorm(32, 512, eps=1e-06, affine=True)
+            (conv1): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 256, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+            (conv_shortcut): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1-2): 2 x ResnetBlock2D(
+            (norm1): GroupNorm(32, 256, eps=1e-06, affine=True)
+            (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 256, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+          )
+        )
+        (upsamplers): ModuleList(
+          (0): Upsample2D(
+            (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+      )
+      (3): UpDecoderBlock2D(
+        (resnets): ModuleList(
+          (0): ResnetBlock2D(
+            (norm1): GroupNorm(32, 256, eps=1e-06, affine=True)
+            (conv1): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 128, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+            (conv_shortcut): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1-2): 2 x ResnetBlock2D(
+            (norm1): GroupNorm(32, 128, eps=1e-06, affine=True)
+            (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (norm2): GroupNorm(32, 128, eps=1e-06, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+          )
+        )
+      )
+    )
+    (mid_block): UNetMidBlock2D(
+      (attentions): ModuleList(
+        (0): Attention(
+          (group_norm): GroupNorm(32, 512, eps=1e-06, affine=True)
+          (to_q): Linear(in_features=512, out_features=512, bias=True)
+          (to_k): Linear(in_features=512, out_features=512, bias=True)
+          (to_v): Linear(in_features=512, out_features=512, bias=True)
+          (to_out): ModuleList(
+            (0): Linear(in_features=512, out_features=512, bias=True)
+            (1): Dropout(p=0.0, inplace=False)
+          )
+        )
+      )
+      (resnets): ModuleList(
+        (0-1): 2 x ResnetBlock2D(
+          (norm1): GroupNorm(32, 512, eps=1e-06, affine=True)
+          (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (norm2): GroupNorm(32, 512, eps=1e-06, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+        )
+      )
+    )
+    (conv_norm_out): GroupNorm(32, 128, eps=1e-06, affine=True)
+    (conv_act): SiLU()
+    (conv_out): Conv2d(128, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  )
+  (quant_conv): Conv2d(8, 8, kernel_size=(1, 1), stride=(1, 1))
+  (post_quant_conv): Conv2d(4, 4, kernel_size=(1, 1), stride=(1, 1))
+) 
+
+-- UNet Configuration --
+UNet2DConditionModel(
+  (conv_in): Conv2d(4, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (time_proj): Timesteps()
+  (time_embedding): TimestepEmbedding(
+    (linear_1): Linear(in_features=320, out_features=1280, bias=True)
+    (act): SiLU()
+    (linear_2): Linear(in_features=1280, out_features=1280, bias=True)
+  )
+  (down_blocks): ModuleList(
+    (0): CrossAttnDownBlock2D(
+      (attentions): ModuleList(
+        (0-1): 2 x Transformer2DModel(
+          (norm): GroupNorm(32, 320, eps=1e-06, affine=True)
+          (proj_in): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+          (transformer_blocks): ModuleList(
+            (0): BasicTransformerBlock(
+              (norm1): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+              (attn1): Attention(
+                (to_q): Linear(in_features=320, out_features=320, bias=False)
+                (to_k): Linear(in_features=320, out_features=320, bias=False)
+                (to_v): Linear(in_features=320, out_features=320, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=320, out_features=320, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm2): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+              (attn2): Attention(
+                (to_q): Linear(in_features=320, out_features=320, bias=False)
+                (to_k): Linear(in_features=768, out_features=320, bias=False)
+                (to_v): Linear(in_features=768, out_features=320, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=320, out_features=320, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm3): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+              (ff): FeedForward(
+                (net): ModuleList(
+                  (0): GEGLU(
+                    (proj): Linear(in_features=320, out_features=2560, bias=True)
+                  )
+                  (1): Dropout(p=0.0, inplace=False)
+                  (2): Linear(in_features=1280, out_features=320, bias=True)
+                )
+              )
+            )
+          )
+          (proj_out): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (resnets): ModuleList(
+        (0-1): 2 x ResnetBlock2D(
+          (norm1): GroupNorm(32, 320, eps=1e-05, affine=True)
+          (conv1): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=320, bias=True)
+          (norm2): GroupNorm(32, 320, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+        )
+      )
+      (downsamplers): ModuleList(
+        (0): Downsample2D(
+          (conv): Conv2d(320, 320, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        )
+      )
+    )
+    (1): CrossAttnDownBlock2D(
+      (attentions): ModuleList(
+        (0-1): 2 x Transformer2DModel(
+          (norm): GroupNorm(32, 640, eps=1e-06, affine=True)
+          (proj_in): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+          (transformer_blocks): ModuleList(
+            (0): BasicTransformerBlock(
+              (norm1): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+              (attn1): Attention(
+                (to_q): Linear(in_features=640, out_features=640, bias=False)
+                (to_k): Linear(in_features=640, out_features=640, bias=False)
+                (to_v): Linear(in_features=640, out_features=640, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=640, out_features=640, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm2): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+              (attn2): Attention(
+                (to_q): Linear(in_features=640, out_features=640, bias=False)
+                (to_k): Linear(in_features=768, out_features=640, bias=False)
+                (to_v): Linear(in_features=768, out_features=640, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=640, out_features=640, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm3): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+              (ff): FeedForward(
+                (net): ModuleList(
+                  (0): GEGLU(
+                    (proj): Linear(in_features=640, out_features=5120, bias=True)
+                  )
+                  (1): Dropout(p=0.0, inplace=False)
+                  (2): Linear(in_features=2560, out_features=640, bias=True)
+                )
+              )
+            )
+          )
+          (proj_out): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (resnets): ModuleList(
+        (0): ResnetBlock2D(
+          (norm1): GroupNorm(32, 320, eps=1e-05, affine=True)
+          (conv1): Conv2d(320, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+          (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(320, 640, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (1): ResnetBlock2D(
+          (norm1): GroupNorm(32, 640, eps=1e-05, affine=True)
+          (conv1): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+          (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+        )
+      )
+      (downsamplers): ModuleList(
+        (0): Downsample2D(
+          (conv): Conv2d(640, 640, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        )
+      )
+    )
+    (2): CrossAttnDownBlock2D(
+      (attentions): ModuleList(
+        (0-1): 2 x Transformer2DModel(
+          (norm): GroupNorm(32, 1280, eps=1e-06, affine=True)
+          (proj_in): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+          (transformer_blocks): ModuleList(
+            (0): BasicTransformerBlock(
+              (norm1): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+              (attn1): Attention(
+                (to_q): Linear(in_features=1280, out_features=1280, bias=False)
+                (to_k): Linear(in_features=1280, out_features=1280, bias=False)
+                (to_v): Linear(in_features=1280, out_features=1280, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=1280, out_features=1280, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm2): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+              (attn2): Attention(
+                (to_q): Linear(in_features=1280, out_features=1280, bias=False)
+                (to_k): Linear(in_features=768, out_features=1280, bias=False)
+                (to_v): Linear(in_features=768, out_features=1280, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=1280, out_features=1280, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm3): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+              (ff): FeedForward(
+                (net): ModuleList(
+                  (0): GEGLU(
+                    (proj): Linear(in_features=1280, out_features=10240, bias=True)
+                  )
+                  (1): Dropout(p=0.0, inplace=False)
+                  (2): Linear(in_features=5120, out_features=1280, bias=True)
+                )
+              )
+            )
+          )
+          (proj_out): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (resnets): ModuleList(
+        (0): ResnetBlock2D(
+          (norm1): GroupNorm(32, 640, eps=1e-05, affine=True)
+          (conv1): Conv2d(640, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+          (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(640, 1280, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (1): ResnetBlock2D(
+          (norm1): GroupNorm(32, 1280, eps=1e-05, affine=True)
+          (conv1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+          (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+        )
+      )
+      (downsamplers): ModuleList(
+        (0): Downsample2D(
+          (conv): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        )
+      )
+    )
+    (3): DownBlock2D(
+      (resnets): ModuleList(
+        (0-1): 2 x ResnetBlock2D(
+          (norm1): GroupNorm(32, 1280, eps=1e-05, affine=True)
+          (conv1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+          (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+        )
+      )
+    )
+  )
+  (up_blocks): ModuleList(
+    (0): UpBlock2D(
+      (resnets): ModuleList(
+        (0-2): 3 x ResnetBlock2D(
+          (norm1): GroupNorm(32, 2560, eps=1e-05, affine=True)
+          (conv1): Conv2d(2560, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+          (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(2560, 1280, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (upsamplers): ModuleList(
+        (0): Upsample2D(
+          (conv): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+      )
+    )
+    (1): CrossAttnUpBlock2D(
+      (attentions): ModuleList(
+        (0-2): 3 x Transformer2DModel(
+          (norm): GroupNorm(32, 1280, eps=1e-06, affine=True)
+          (proj_in): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+          (transformer_blocks): ModuleList(
+            (0): BasicTransformerBlock(
+              (norm1): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+              (attn1): Attention(
+                (to_q): Linear(in_features=1280, out_features=1280, bias=False)
+                (to_k): Linear(in_features=1280, out_features=1280, bias=False)
+                (to_v): Linear(in_features=1280, out_features=1280, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=1280, out_features=1280, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm2): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+              (attn2): Attention(
+                (to_q): Linear(in_features=1280, out_features=1280, bias=False)
+                (to_k): Linear(in_features=768, out_features=1280, bias=False)
+                (to_v): Linear(in_features=768, out_features=1280, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=1280, out_features=1280, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm3): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+              (ff): FeedForward(
+                (net): ModuleList(
+                  (0): GEGLU(
+                    (proj): Linear(in_features=1280, out_features=10240, bias=True)
+                  )
+                  (1): Dropout(p=0.0, inplace=False)
+                  (2): Linear(in_features=5120, out_features=1280, bias=True)
+                )
+              )
+            )
+          )
+          (proj_out): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (resnets): ModuleList(
+        (0-1): 2 x ResnetBlock2D(
+          (norm1): GroupNorm(32, 2560, eps=1e-05, affine=True)
+          (conv1): Conv2d(2560, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+          (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(2560, 1280, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (2): ResnetBlock2D(
+          (norm1): GroupNorm(32, 1920, eps=1e-05, affine=True)
+          (conv1): Conv2d(1920, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+          (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(1920, 1280, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (upsamplers): ModuleList(
+        (0): Upsample2D(
+          (conv): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+      )
+    )
+    (2): CrossAttnUpBlock2D(
+      (attentions): ModuleList(
+        (0-2): 3 x Transformer2DModel(
+          (norm): GroupNorm(32, 640, eps=1e-06, affine=True)
+          (proj_in): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+          (transformer_blocks): ModuleList(
+            (0): BasicTransformerBlock(
+              (norm1): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+              (attn1): Attention(
+                (to_q): Linear(in_features=640, out_features=640, bias=False)
+                (to_k): Linear(in_features=640, out_features=640, bias=False)
+                (to_v): Linear(in_features=640, out_features=640, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=640, out_features=640, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm2): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+              (attn2): Attention(
+                (to_q): Linear(in_features=640, out_features=640, bias=False)
+                (to_k): Linear(in_features=768, out_features=640, bias=False)
+                (to_v): Linear(in_features=768, out_features=640, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=640, out_features=640, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm3): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+              (ff): FeedForward(
+                (net): ModuleList(
+                  (0): GEGLU(
+                    (proj): Linear(in_features=640, out_features=5120, bias=True)
+                  )
+                  (1): Dropout(p=0.0, inplace=False)
+                  (2): Linear(in_features=2560, out_features=640, bias=True)
+                )
+              )
+            )
+          )
+          (proj_out): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (resnets): ModuleList(
+        (0): ResnetBlock2D(
+          (norm1): GroupNorm(32, 1920, eps=1e-05, affine=True)
+          (conv1): Conv2d(1920, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+          (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(1920, 640, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (1): ResnetBlock2D(
+          (norm1): GroupNorm(32, 1280, eps=1e-05, affine=True)
+          (conv1): Conv2d(1280, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+          (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(1280, 640, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (2): ResnetBlock2D(
+          (norm1): GroupNorm(32, 960, eps=1e-05, affine=True)
+          (conv1): Conv2d(960, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+          (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(960, 640, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (upsamplers): ModuleList(
+        (0): Upsample2D(
+          (conv): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+      )
+    )
+    (3): CrossAttnUpBlock2D(
+      (attentions): ModuleList(
+        (0-2): 3 x Transformer2DModel(
+          (norm): GroupNorm(32, 320, eps=1e-06, affine=True)
+          (proj_in): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+          (transformer_blocks): ModuleList(
+            (0): BasicTransformerBlock(
+              (norm1): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+              (attn1): Attention(
+                (to_q): Linear(in_features=320, out_features=320, bias=False)
+                (to_k): Linear(in_features=320, out_features=320, bias=False)
+                (to_v): Linear(in_features=320, out_features=320, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=320, out_features=320, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm2): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+              (attn2): Attention(
+                (to_q): Linear(in_features=320, out_features=320, bias=False)
+                (to_k): Linear(in_features=768, out_features=320, bias=False)
+                (to_v): Linear(in_features=768, out_features=320, bias=False)
+                (to_out): ModuleList(
+                  (0): Linear(in_features=320, out_features=320, bias=True)
+                  (1): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (norm3): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+              (ff): FeedForward(
+                (net): ModuleList(
+                  (0): GEGLU(
+                    (proj): Linear(in_features=320, out_features=2560, bias=True)
+                  )
+                  (1): Dropout(p=0.0, inplace=False)
+                  (2): Linear(in_features=1280, out_features=320, bias=True)
+                )
+              )
+            )
+          )
+          (proj_out): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (resnets): ModuleList(
+        (0): ResnetBlock2D(
+          (norm1): GroupNorm(32, 960, eps=1e-05, affine=True)
+          (conv1): Conv2d(960, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=320, bias=True)
+          (norm2): GroupNorm(32, 320, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(960, 320, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (1-2): 2 x ResnetBlock2D(
+          (norm1): GroupNorm(32, 640, eps=1e-05, affine=True)
+          (conv1): Conv2d(640, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (time_emb_proj): Linear(in_features=1280, out_features=320, bias=True)
+          (norm2): GroupNorm(32, 320, eps=1e-05, affine=True)
+          (dropout): Dropout(p=0.0, inplace=False)
+          (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (nonlinearity): SiLU()
+          (conv_shortcut): Conv2d(640, 320, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+    )
+  )
+  (mid_block): UNetMidBlock2DCrossAttn(
+    (attentions): ModuleList(
+      (0): Transformer2DModel(
+        (norm): GroupNorm(32, 1280, eps=1e-06, affine=True)
+        (proj_in): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+        (transformer_blocks): ModuleList(
+          (0): BasicTransformerBlock(
+            (norm1): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+            (attn1): Attention(
+              (to_q): Linear(in_features=1280, out_features=1280, bias=False)
+              (to_k): Linear(in_features=1280, out_features=1280, bias=False)
+              (to_v): Linear(in_features=1280, out_features=1280, bias=False)
+              (to_out): ModuleList(
+                (0): Linear(in_features=1280, out_features=1280, bias=True)
+                (1): Dropout(p=0.0, inplace=False)
+              )
+            )
+            (norm2): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+            (attn2): Attention(
+              (to_q): Linear(in_features=1280, out_features=1280, bias=False)
+              (to_k): Linear(in_features=768, out_features=1280, bias=False)
+              (to_v): Linear(in_features=768, out_features=1280, bias=False)
+              (to_out): ModuleList(
+                (0): Linear(in_features=1280, out_features=1280, bias=True)
+                (1): Dropout(p=0.0, inplace=False)
+              )
+            )
+            (norm3): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+            (ff): FeedForward(
+              (net): ModuleList(
+                (0): GEGLU(
+                  (proj): Linear(in_features=1280, out_features=10240, bias=True)
+                )
+                (1): Dropout(p=0.0, inplace=False)
+                (2): Linear(in_features=5120, out_features=1280, bias=True)
+              )
+            )
+          )
+        )
+        (proj_out): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+      )
+    )
+    (resnets): ModuleList(
+      (0-1): 2 x ResnetBlock2D(
+        (norm1): GroupNorm(32, 1280, eps=1e-05, affine=True)
+        (conv1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+        (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+        (dropout): Dropout(p=0.0, inplace=False)
+        (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (nonlinearity): SiLU()
+      )
+    )
+  )
+  (conv_norm_out): GroupNorm(32, 320, eps=1e-05, affine=True)
+  (conv_act): SiLU()
+  (conv_out): Conv2d(320, 4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+) 
+
+-- Text Encoder (CLIP) Configuration --
+CLIPTextModel(
+  (text_model): CLIPTextTransformer(
+    (embeddings): CLIPTextEmbeddings(
+      (token_embedding): Embedding(49408, 768)
+      (position_embedding): Embedding(77, 768)
+    )
+    (encoder): CLIPEncoder(
+      (layers): ModuleList(
+        (0-11): 12 x CLIPEncoderLayer(
+          (self_attn): CLIPAttention(
+            (k_proj): Linear(in_features=768, out_features=768, bias=True)
+            (v_proj): Linear(in_features=768, out_features=768, bias=True)
+            (q_proj): Linear(in_features=768, out_features=768, bias=True)
+            (out_proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (layer_norm1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          (mlp): CLIPMLP(
+            (activation_fn): QuickGELUActivation()
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          )
+          (layer_norm2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+        )
+      )
+    )
+    (final_layer_norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+  )
+) 
+
+GUIDANCE_SCALE: 7.5
+NUM_DIFFUSION_STEPS: 50
+
+==============================
+
+Creating dummy latent data for demonstration purposes...
+Dummy data created.
+
+Euclidean norms between the 0th latent vector of each prompt:
+
+Distance between prompt [0] 'a cat' and prompt [1] 'a fern': 180.2160
+Distance between prompt [0] 'a cat' and prompt [2] 'a close-up of a fern': 181.5027
+Distance between prompt [0] 'a cat' and prompt [3] 'a picture of a fern': 180.4658
+Distance between prompt [0] 'a cat' and prompt [4] 'a green plant with fronds': 181.7563
+Distance between prompt [0] 'a cat' and prompt [5] 'a botanical fern portrait': 179.7787
+Distance between prompt [0] 'a cat' and prompt [6] 'a macro shot of a fern': 181.8333
+Distance between prompt [0] 'a cat' and prompt [7] 'a lone fern leaf': 181.7228
+Distance between prompt [0] 'a cat' and prompt [8] 'a cluster of ferns in the forest': 179.8779
+Distance between prompt [0] 'a cat' and prompt [9] 'a potted fern': 179.6388
+Distance between prompt [0] 'a cat' and prompt [10] 'a small wild fern': 181.2607
+Distance between prompt [0] 'a cat' and prompt [11] 'a fern under sunlight': 179.6751
+Distance between prompt [0] 'a cat' and prompt [12] 'a fresh green fern': 181.3113
+Distance between prompt [0] 'a cat' and prompt [13] 'a detailed fern plant': 182.9250
+Distance between prompt [0] 'a cat' and prompt [14] 'a fern against a white background': 180.9911
+Distance between prompt [0] 'a cat' and prompt [15] 'a fern in a forest': 180.2427
+Distance between prompt [0] 'a cat' and prompt [16] 'a young fern shoot': 181.6460
+Distance between prompt [0] 'a cat' and prompt [17] 'a fern sprouting': 182.0887
+Distance between prompt [0] 'a cat' and prompt [18] 'a delicate fern frond': 181.9847
+Distance between prompt [0] 'a cat' and prompt [19] 'a tropical fern plant': 182.4953
+Distance between prompt [0] 'a cat' and prompt [20] 'a single fern leaf on wood': 179.4813
+Distance between prompt [1] 'a fern' and prompt [2] 'a close-up of a fern': 180.4133
+Distance between prompt [1] 'a fern' and prompt [3] 'a picture of a fern': 179.7366
+Distance between prompt [1] 'a fern' and prompt [4] 'a green plant with fronds': 179.6575
+Distance between prompt [1] 'a fern' and prompt [5] 'a botanical fern portrait': 180.4600
+Distance between prompt [1] 'a fern' and prompt [6] 'a macro shot of a fern': 179.0611
+Distance between prompt [1] 'a fern' and prompt [7] 'a lone fern leaf': 181.3190
+Distance between prompt [1] 'a fern' and prompt [8] 'a cluster of ferns in the forest': 180.0569
+Distance between prompt [1] 'a fern' and prompt [9] 'a potted fern': 179.8716
+Distance between prompt [1] 'a fern' and prompt [10] 'a small wild fern': 181.0036
+Distance between prompt [1] 'a fern' and prompt [11] 'a fern under sunlight': 179.8691
+Distance between prompt [1] 'a fern' and prompt [12] 'a fresh green fern': 180.5357
+Distance between prompt [1] 'a fern' and prompt [13] 'a detailed fern plant': 181.5219
+Distance between prompt [1] 'a fern' and prompt [14] 'a fern against a white background': 179.8373
+Distance between prompt [1] 'a fern' and prompt [15] 'a fern in a forest': 181.3560
+Distance between prompt [1] 'a fern' and prompt [16] 'a young fern shoot': 181.1064
+Distance between prompt [1] 'a fern' and prompt [17] 'a fern sprouting': 181.5401
+Distance between prompt [1] 'a fern' and prompt [18] 'a delicate fern frond': 181.9658
+Distance between prompt [1] 'a fern' and prompt [19] 'a tropical fern plant': 181.1371
+Distance between prompt [1] 'a fern' and prompt [20] 'a single fern leaf on wood': 180.0345
+Distance between prompt [2] 'a close-up of a fern' and prompt [3] 'a picture of a fern': 178.7704
+Distance between prompt [2] 'a close-up of a fern' and prompt [4] 'a green plant with fronds': 180.4300
+Distance between prompt [2] 'a close-up of a fern' and prompt [5] 'a botanical fern portrait': 179.9334
+Distance between prompt [2] 'a close-up of a fern' and prompt [6] 'a macro shot of a fern': 181.0935
+Distance between prompt [2] 'a close-up of a fern' and prompt [7] 'a lone fern leaf': 180.6805
+Distance between prompt [2] 'a close-up of a fern' and prompt [8] 'a cluster of ferns in the forest': 179.9913
+Distance between prompt [2] 'a close-up of a fern' and prompt [9] 'a potted fern': 179.6294
+Distance between prompt [2] 'a close-up of a fern' and prompt [10] 'a small wild fern': 180.5966
+Distance between prompt [2] 'a close-up of a fern' and prompt [11] 'a fern under sunlight': 179.6923
+Distance between prompt [2] 'a close-up of a fern' and prompt [12] 'a fresh green fern': 181.1514
+Distance between prompt [2] 'a close-up of a fern' and prompt [13] 'a detailed fern plant': 181.7330
+Distance between prompt [2] 'a close-up of a fern' and prompt [14] 'a fern against a white background': 180.6834
+Distance between prompt [2] 'a close-up of a fern' and prompt [15] 'a fern in a forest': 180.8011
+Distance between prompt [2] 'a close-up of a fern' and prompt [16] 'a young fern shoot': 181.0968
+Distance between prompt [2] 'a close-up of a fern' and prompt [17] 'a fern sprouting': 179.2036
+Distance between prompt [2] 'a close-up of a fern' and prompt [18] 'a delicate fern frond': 180.1695
+Distance between prompt [2] 'a close-up of a fern' and prompt [19] 'a tropical fern plant': 181.2158
+Distance between prompt [2] 'a close-up of a fern' and prompt [20] 'a single fern leaf on wood': 179.3638
+Distance between prompt [3] 'a picture of a fern' and prompt [4] 'a green plant with fronds': 179.3005
+Distance between prompt [3] 'a picture of a fern' and prompt [5] 'a botanical fern portrait': 179.0750
+Distance between prompt [3] 'a picture of a fern' and prompt [6] 'a macro shot of a fern': 178.1101
+Distance between prompt [3] 'a picture of a fern' and prompt [7] 'a lone fern leaf': 181.5312
+Distance between prompt [3] 'a picture of a fern' and prompt [8] 'a cluster of ferns in the forest': 181.5503
+Distance between prompt [3] 'a picture of a fern' and prompt [9] 'a potted fern': 179.6004
+Distance between prompt [3] 'a picture of a fern' and prompt [10] 'a small wild fern': 179.6138
+Distance between prompt [3] 'a picture of a fern' and prompt [11] 'a fern under sunlight': 179.9490
+Distance between prompt [3] 'a picture of a fern' and prompt [12] 'a fresh green fern': 180.5292
+Distance between prompt [3] 'a picture of a fern' and prompt [13] 'a detailed fern plant': 180.9115
+Distance between prompt [3] 'a picture of a fern' and prompt [14] 'a fern against a white background': 181.5802
+Distance between prompt [3] 'a picture of a fern' and prompt [15] 'a fern in a forest': 179.6139
+Distance between prompt [3] 'a picture of a fern' and prompt [16] 'a young fern shoot': 181.0238
+Distance between prompt [3] 'a picture of a fern' and prompt [17] 'a fern sprouting': 180.2103
+Distance between prompt [3] 'a picture of a fern' and prompt [18] 'a delicate fern frond': 180.8727
+Distance between prompt [3] 'a picture of a fern' and prompt [19] 'a tropical fern plant': 180.5991
+Distance between prompt [3] 'a picture of a fern' and prompt [20] 'a single fern leaf on wood': 179.1118
+Distance between prompt [4] 'a green plant with fronds' and prompt [5] 'a botanical fern portrait': 179.0653
+Distance between prompt [4] 'a green plant with fronds' and prompt [6] 'a macro shot of a fern': 179.7977
+Distance between prompt [4] 'a green plant with fronds' and prompt [7] 'a lone fern leaf': 180.6749
+Distance between prompt [4] 'a green plant with fronds' and prompt [8] 'a cluster of ferns in the forest': 180.5719
+Distance between prompt [4] 'a green plant with fronds' and prompt [9] 'a potted fern': 179.5255
+Distance between prompt [4] 'a green plant with fronds' and prompt [10] 'a small wild fern': 179.4587
+Distance between prompt [4] 'a green plant with fronds' and prompt [11] 'a fern under sunlight': 180.2188
+Distance between prompt [4] 'a green plant with fronds' and prompt [12] 'a fresh green fern': 179.9903
+Distance between prompt [4] 'a green plant with fronds' and prompt [13] 'a detailed fern plant': 180.4684
+Distance between prompt [4] 'a green plant with fronds' and prompt [14] 'a fern against a white background': 181.6451
+Distance between prompt [4] 'a green plant with fronds' and prompt [15] 'a fern in a forest': 180.1904
+Distance between prompt [4] 'a green plant with fronds' and prompt [16] 'a young fern shoot': 180.7345
+Distance between prompt [4] 'a green plant with fronds' and prompt [17] 'a fern sprouting': 180.6894
+Distance between prompt [4] 'a green plant with fronds' and prompt [18] 'a delicate fern frond': 180.5367
+Distance between prompt [4] 'a green plant with fronds' and prompt [19] 'a tropical fern plant': 180.2370
+Distance between prompt [4] 'a green plant with fronds' and prompt [20] 'a single fern leaf on wood': 179.6792
+Distance between prompt [5] 'a botanical fern portrait' and prompt [6] 'a macro shot of a fern': 179.5498
+Distance between prompt [5] 'a botanical fern portrait' and prompt [7] 'a lone fern leaf': 181.0096
+Distance between prompt [5] 'a botanical fern portrait' and prompt [8] 'a cluster of ferns in the forest': 180.0698
+Distance between prompt [5] 'a botanical fern portrait' and prompt [9] 'a potted fern': 179.3412
+Distance between prompt [5] 'a botanical fern portrait' and prompt [10] 'a small wild fern': 180.0010
+Distance between prompt [5] 'a botanical fern portrait' and prompt [11] 'a fern under sunlight': 179.2271
+Distance between prompt [5] 'a botanical fern portrait' and prompt [12] 'a fresh green fern': 180.2146
+Distance between prompt [5] 'a botanical fern portrait' and prompt [13] 'a detailed fern plant': 181.1176
+Distance between prompt [5] 'a botanical fern portrait' and prompt [14] 'a fern against a white background': 180.8668
+Distance between prompt [5] 'a botanical fern portrait' and prompt [15] 'a fern in a forest': 180.3078
+Distance between prompt [5] 'a botanical fern portrait' and prompt [16] 'a young fern shoot': 180.8951
+Distance between prompt [5] 'a botanical fern portrait' and prompt [17] 'a fern sprouting': 180.1943
+Distance between prompt [5] 'a botanical fern portrait' and prompt [18] 'a delicate fern frond': 180.5914
+Distance between prompt [5] 'a botanical fern portrait' and prompt [19] 'a tropical fern plant': 180.2694
+Distance between prompt [5] 'a botanical fern portrait' and prompt [20] 'a single fern leaf on wood': 179.4691
+Distance between prompt [6] 'a macro shot of a fern' and prompt [7] 'a lone fern leaf': 179.7832
+Distance between prompt [6] 'a macro shot of a fern' and prompt [8] 'a cluster of ferns in the forest': 180.4075
+Distance between prompt [6] 'a macro shot of a fern' and prompt [9] 'a potted fern': 179.3004
+Distance between prompt [6] 'a macro shot of a fern' and prompt [10] 'a small wild fern': 180.5612
+Distance between prompt [6] 'a macro shot of a fern' and prompt [11] 'a fern under sunlight': 179.7780
+Distance between prompt [6] 'a macro shot of a fern' and prompt [12] 'a fresh green fern': 179.7201
+Distance between prompt [6] 'a macro shot of a fern' and prompt [13] 'a detailed fern plant': 180.4861
+Distance between prompt [6] 'a macro shot of a fern' and prompt [14] 'a fern against a white background': 180.4464
+Distance between prompt [6] 'a macro shot of a fern' and prompt [15] 'a fern in a forest': 180.3078
+Distance between prompt [6] 'a macro shot of a fern' and prompt [16] 'a young fern shoot': 180.8177
+Distance between prompt [6] 'a macro shot of a fern' and prompt [17] 'a fern sprouting': 180.3509
+Distance between prompt [6] 'a macro shot of a fern' and prompt [18] 'a delicate fern frond': 180.1491
+Distance between prompt [6] 'a macro shot of a fern' and prompt [19] 'a tropical fern plant': 180.1897
+Distance between prompt [6] 'a macro shot of a fern' and prompt [20] 'a single fern leaf on wood': 179.2209
+Distance between prompt [7] 'a lone fern leaf' and prompt [8] 'a cluster of ferns in the forest': 180.4505
+Distance between prompt [7] 'a lone fern leaf' and prompt [9] 'a potted fern': 178.4756
+Distance between prompt [7] 'a lone fern leaf' and prompt [10] 'a small wild fern': 180.5076
+Distance between prompt [7] 'a lone fern leaf' and prompt [11] 'a fern under sunlight': 179.5981
+Distance between prompt [7] 'a lone fern leaf' and prompt [12] 'a fresh green fern': 181.4839
+Distance between prompt [7] 'a lone fern leaf' and prompt [13] 'a detailed fern plant': 182.1017
+Distance between prompt [7] 'a lone fern leaf' and prompt [14] 'a fern against a white background': 180.9912
+Distance between prompt [7] 'a lone fern leaf' and prompt [15] 'a fern in a forest': 180.4989
+Distance between prompt [7] 'a lone fern leaf' and prompt [16] 'a young fern shoot': 181.3753
+Distance between prompt [7] 'a lone fern leaf' and prompt [17] 'a fern sprouting': 182.3688
+Distance between prompt [7] 'a lone fern leaf' and prompt [18] 'a delicate fern frond': 181.4702
+Distance between prompt [7] 'a lone fern leaf' and prompt [19] 'a tropical fern plant': 182.2541
+Distance between prompt [7] 'a lone fern leaf' and prompt [20] 'a single fern leaf on wood': 181.2441
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [9] 'a potted fern': 178.7841
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [10] 'a small wild fern': 181.3630
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [11] 'a fern under sunlight': 180.5894
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [12] 'a fresh green fern': 180.0980
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [13] 'a detailed fern plant': 182.2130
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [14] 'a fern against a white background': 181.3879
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [15] 'a fern in a forest': 179.9370
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [16] 'a young fern shoot': 180.2671
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [17] 'a fern sprouting': 181.2813
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [18] 'a delicate fern frond': 181.6204
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [19] 'a tropical fern plant': 181.0814
+Distance between prompt [8] 'a cluster of ferns in the forest' and prompt [20] 'a single fern leaf on wood': 179.1255
+Distance between prompt [9] 'a potted fern' and prompt [10] 'a small wild fern': 179.0644
+Distance between prompt [9] 'a potted fern' and prompt [11] 'a fern under sunlight': 179.4763
+Distance between prompt [9] 'a potted fern' and prompt [12] 'a fresh green fern': 181.0506
+Distance between prompt [9] 'a potted fern' and prompt [13] 'a detailed fern plant': 179.8580
+Distance between prompt [9] 'a potted fern' and prompt [14] 'a fern against a white background': 180.2659
+Distance between prompt [9] 'a potted fern' and prompt [15] 'a fern in a forest': 179.3568
+Distance between prompt [9] 'a potted fern' and prompt [16] 'a young fern shoot': 180.4434
+Distance between prompt [9] 'a potted fern' and prompt [17] 'a fern sprouting': 179.2841
+Distance between prompt [9] 'a potted fern' and prompt [18] 'a delicate fern frond': 180.1728
+Distance between prompt [9] 'a potted fern' and prompt [19] 'a tropical fern plant': 181.0893
+Distance between prompt [9] 'a potted fern' and prompt [20] 'a single fern leaf on wood': 179.3264
+Distance between prompt [10] 'a small wild fern' and prompt [11] 'a fern under sunlight': 179.5559
+Distance between prompt [10] 'a small wild fern' and prompt [12] 'a fresh green fern': 180.1930
+Distance between prompt [10] 'a small wild fern' and prompt [13] 'a detailed fern plant': 182.8074
+Distance between prompt [10] 'a small wild fern' and prompt [14] 'a fern against a white background': 181.7714
+Distance between prompt [10] 'a small wild fern' and prompt [15] 'a fern in a forest': 180.1801
+Distance between prompt [10] 'a small wild fern' and prompt [16] 'a young fern shoot': 180.5607
+Distance between prompt [10] 'a small wild fern' and prompt [17] 'a fern sprouting': 180.1624
+Distance between prompt [10] 'a small wild fern' and prompt [18] 'a delicate fern frond': 181.3366
+Distance between prompt [10] 'a small wild fern' and prompt [19] 'a tropical fern plant': 180.7352
+Distance between prompt [10] 'a small wild fern' and prompt [20] 'a single fern leaf on wood': 180.9665
+Distance between prompt [11] 'a fern under sunlight' and prompt [12] 'a fresh green fern': 181.2840
+Distance between prompt [11] 'a fern under sunlight' and prompt [13] 'a detailed fern plant': 182.3267
+Distance between prompt [11] 'a fern under sunlight' and prompt [14] 'a fern against a white background': 180.1665
+Distance between prompt [11] 'a fern under sunlight' and prompt [15] 'a fern in a forest': 180.2239
+Distance between prompt [11] 'a fern under sunlight' and prompt [16] 'a young fern shoot': 181.4813
+Distance between prompt [11] 'a fern under sunlight' and prompt [17] 'a fern sprouting': 180.6058
+Distance between prompt [11] 'a fern under sunlight' and prompt [18] 'a delicate fern frond': 180.2534
+Distance between prompt [11] 'a fern under sunlight' and prompt [19] 'a tropical fern plant': 181.0020
+Distance between prompt [11] 'a fern under sunlight' and prompt [20] 'a single fern leaf on wood': 180.0093
+Distance between prompt [12] 'a fresh green fern' and prompt [13] 'a detailed fern plant': 182.5625
+Distance between prompt [12] 'a fresh green fern' and prompt [14] 'a fern against a white background': 181.9033
+Distance between prompt [12] 'a fresh green fern' and prompt [15] 'a fern in a forest': 181.8696
+Distance between prompt [12] 'a fresh green fern' and prompt [16] 'a young fern shoot': 181.9363
+Distance between prompt [12] 'a fresh green fern' and prompt [17] 'a fern sprouting': 181.1836
+Distance between prompt [12] 'a fresh green fern' and prompt [18] 'a delicate fern frond': 181.8182
+Distance between prompt [12] 'a fresh green fern' and prompt [19] 'a tropical fern plant': 181.9087
+Distance between prompt [12] 'a fresh green fern' and prompt [20] 'a single fern leaf on wood': 179.3690
+Distance between prompt [13] 'a detailed fern plant' and prompt [14] 'a fern against a white background': 182.6296
+Distance between prompt [13] 'a detailed fern plant' and prompt [15] 'a fern in a forest': 181.6195
+Distance between prompt [13] 'a detailed fern plant' and prompt [16] 'a young fern shoot': 183.4559
+Distance between prompt [13] 'a detailed fern plant' and prompt [17] 'a fern sprouting': 183.3282
+Distance between prompt [13] 'a detailed fern plant' and prompt [18] 'a delicate fern frond': 183.4268
+Distance between prompt [13] 'a detailed fern plant' and prompt [19] 'a tropical fern plant': 182.9334
+Distance between prompt [13] 'a detailed fern plant' and prompt [20] 'a single fern leaf on wood': 182.2190
+Distance between prompt [14] 'a fern against a white background' and prompt [15] 'a fern in a forest': 181.1489
+Distance between prompt [14] 'a fern against a white background' and prompt [16] 'a young fern shoot': 181.2860
+Distance between prompt [14] 'a fern against a white background' and prompt [17] 'a fern sprouting': 181.6358
+Distance between prompt [14] 'a fern against a white background' and prompt [18] 'a delicate fern frond': 181.5575
+Distance between prompt [14] 'a fern against a white background' and prompt [19] 'a tropical fern plant': 180.4226
+Distance between prompt [14] 'a fern against a white background' and prompt [20] 'a single fern leaf on wood': 180.8740
+Distance between prompt [15] 'a fern in a forest' and prompt [16] 'a young fern shoot': 180.9772
+Distance between prompt [15] 'a fern in a forest' and prompt [17] 'a fern sprouting': 181.9056
+Distance between prompt [15] 'a fern in a forest' and prompt [18] 'a delicate fern frond': 181.9120
+Distance between prompt [15] 'a fern in a forest' and prompt [19] 'a tropical fern plant': 180.2648
+Distance between prompt [15] 'a fern in a forest' and prompt [20] 'a single fern leaf on wood': 180.2824
+Distance between prompt [16] 'a young fern shoot' and prompt [17] 'a fern sprouting': 181.3844
+Distance between prompt [16] 'a young fern shoot' and prompt [18] 'a delicate fern frond': 181.6897
+Distance between prompt [16] 'a young fern shoot' and prompt [19] 'a tropical fern plant': 183.0881
+Distance between prompt [16] 'a young fern shoot' and prompt [20] 'a single fern leaf on wood': 181.1335
+Distance between prompt [17] 'a fern sprouting' and prompt [18] 'a delicate fern frond': 182.5589
+Distance between prompt [17] 'a fern sprouting' and prompt [19] 'a tropical fern plant': 182.6533
+Distance between prompt [17] 'a fern sprouting' and prompt [20] 'a single fern leaf on wood': 179.4439
+Distance between prompt [18] 'a delicate fern frond' and prompt [19] 'a tropical fern plant': 182.7037
+Distance between prompt [18] 'a delicate fern frond' and prompt [20] 'a single fern leaf on wood': 180.9796
+Distance between prompt [19] 'a tropical fern plant' and prompt [20] 'a single fern leaf on wood': 179.4822
+
+
